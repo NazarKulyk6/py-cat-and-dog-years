@@ -37,3 +37,33 @@ def test_get_human_age_independent_inputs(
     cat_age: int, dog_age: int, expected: list
 ) -> None:
     assert get_human_age(cat_age, dog_age) == expected
+
+
+@pytest.mark.parametrize(
+    "cat_age,dog_age",
+    [
+        (-10, -10),
+        (-1, 0),
+        (0, -1),
+    ],
+)
+def test_get_human_age_negative_inputs(cat_age: int, dog_age: int) -> None:
+    with pytest.raises(ValueError):
+        get_human_age(cat_age, dog_age)
+
+
+@pytest.mark.parametrize(
+    "cat_age,dog_age",
+    [
+        ("10", 10),
+        (10, "10"),
+        (10.0, 10),
+        (10, 10.0),
+    ],
+)
+def test_get_human_age_non_integer_inputs(
+    cat_age: object,
+    dog_age: object,
+) -> None:
+    with pytest.raises(TypeError):
+        get_human_age(cat_age, dog_age)
